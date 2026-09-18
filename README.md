@@ -1,0 +1,1 @@
+# efr32-edge-gateway
