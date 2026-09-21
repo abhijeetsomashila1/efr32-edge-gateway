@@ -16,6 +16,7 @@
 #include "sl_cos.h"
  
 // Include instance config 
+ #include "sl_iostream_eusart_esp32_config.h"
  #include "sl_iostream_eusart_vcom_config.h"
 
 // MACROs for generating name and IRQ handler function  
@@ -56,6 +57,31 @@
 
 // Check clock configuration
  
+#if (SL_IOSTREAM_EUSART_CLOCK_SOURCE(SL_IOSTREAM_EUSART_ESP32_PERIPHERAL_NO) == \
+    SL_IOSTREAM_EUSART_DISABLED_CLOCK_SOURCE)
+  #error Peripheral clock is disabled for ESP32. Modify sl_clock_manager_tree_config.h \
+  to enable the peripheral clock
+#else
+#define _SL_IOSTREAM_EUSART_ESP32_ENABLE_HIGH_FREQUENCY \
+          SL_IOSTREAM_EUSART_CLOCK_SOURCE(SL_IOSTREAM_EUSART_ESP32_PERIPHERAL_NO) == \
+          SL_IOSTREAM_EUSART_HF_CLOCK_SOURCE
+
+#if defined(SL_IOSTREAM_EUSART_ESP32_ENABLE_HIGH_FREQUENCY) && \
+  (_SL_IOSTREAM_EUSART_ESP32_ENABLE_HIGH_FREQUENCY != \
+  SL_IOSTREAM_EUSART_ESP32_ENABLE_HIGH_FREQUENCY)
+#if SL_IOSTREAM_EUSART_ESP32_ENABLE_HIGH_FREQUENCY
+#warning Configuration mismatch for IOStream EUSART ESP32. \
+ IOStream was configured in high-frequency, but peripheral uses a low-frequency \
+ oscillator in sl_clock_manager_tree_config.h.
+#else 
+#warning Configuration mismatch for IOStream EUSART ESP32. \
+ IOStream was configured in low-frequency, but peripheral uses a high-frequency \
+ oscillator in sl_clock_manager_tree_config.h.
+#endif // SL_IOSTREAM_EUSART_ESP32_ENABLE_HIGH_FREQUENCY
+#endif // Config mismatch
+#endif // SL_IOSTREAM_EUSART_DISABLED_CLOCK_SOURCE
+
+ 
 #if (SL_IOSTREAM_EUSART_CLOCK_SOURCE(SL_IOSTREAM_EUSART_VCOM_PERIPHERAL_NO) == \
     SL_IOSTREAM_EUSART_DISABLED_CLOCK_SOURCE)
   #error Peripheral clock is disabled for VCOM. Modify sl_clock_manager_tree_config.h \
@@ -86,10 +112,34 @@
  
 
 
+sl_status_t sl_iostream_eusart_init_esp32(void);
+
 sl_status_t sl_iostream_eusart_init_vcom(void);
 
 
 // Instance(s) handle and context variable 
+static sl_iostream_uart_t sl_iostream_esp32;
+sl_iostream_t *sl_iostream_esp32_handle = &sl_iostream_esp32.stream;
+
+sl_iostream_uart_t *sl_iostream_uart_esp32_handle = &sl_iostream_esp32;
+static sl_iostream_eusart_context_t  context_esp32;
+
+static uint8_t  rx_buffer_esp32[SL_IOSTREAM_EUSART_ESP32_RX_BUFFER_SIZE];
+
+static sli_iostream_uart_periph_t uart_periph_esp32 = {
+  .rx_irq_number = SL_IOSTREAM_EUSART_RX_IRQ_NUMBER(SL_IOSTREAM_EUSART_ESP32_PERIPHERAL_NO),
+#if defined(SL_CATALOG_POWER_MANAGER_PRESENT)  
+  .tx_irq_number = SL_IOSTREAM_EUSART_TX_IRQ_NUMBER(SL_IOSTREAM_EUSART_ESP32_PERIPHERAL_NO),
+#endif
+};
+
+sl_iostream_instance_info_t sl_iostream_instance_esp32_info = {
+  .handle = &sl_iostream_esp32.stream,
+  .name = "esp32",
+  .type = SL_IOSTREAM_TYPE_UART,
+  .periph_id = SL_IOSTREAM_EUSART_ESP32_PERIPHERAL_NO,
+  .init = sl_iostream_eusart_init_esp32,
+};
 static sl_iostream_uart_t sl_iostream_vcom;
 sl_iostream_t *sl_iostream_vcom_handle = &sl_iostream_vcom.stream;
 
@@ -114,6 +164,95 @@ sl_iostream_instance_info_t sl_iostream_instance_vcom_info = {
 };
 
 
+
+sl_status_t sl_iostream_eusart_init_esp32(void)
+{
+  sl_status_t status;
+
+  sl_iostream_eusart_config_t config_esp32 = { 
+    .eusart = SL_IOSTREAM_EUSART_PERIPHERAL(SL_IOSTREAM_EUSART_ESP32_PERIPHERAL_NO),
+    .eusart_nbr = SL_IOSTREAM_EUSART_ESP32_PERIPHERAL_NO,
+    .bus_clock = SL_IOSTREAM_EUSART_CLOCK_REF(SL_IOSTREAM_EUSART_ESP32_PERIPHERAL_NO),
+    .baudrate = SL_IOSTREAM_EUSART_ESP32_BAUDRATE,
+    .parity = SL_IOSTREAM_EUSART_ESP32_PARITY,
+    .flow_control = SL_IOSTREAM_EUSART_ESP32_FLOW_CONTROL_TYPE,
+    .stop_bits = SL_IOSTREAM_EUSART_ESP32_STOP_BITS,
+#if defined(EUSART_COUNT) && (EUSART_COUNT > 1)
+    .port_index = SL_IOSTREAM_EUSART_ESP32_PERIPHERAL_NO,
+#endif
+    .tx_port = SL_IOSTREAM_EUSART_ESP32_TX_PORT,
+    .tx_pin = SL_IOSTREAM_EUSART_ESP32_TX_PIN,
+    .rx_port = SL_IOSTREAM_EUSART_ESP32_RX_PORT,
+    .rx_pin = SL_IOSTREAM_EUSART_ESP32_RX_PIN,
+#if defined(SL_IOSTREAM_EUSART_ESP32_CTS_PORT)
+    .cts_port = SL_IOSTREAM_EUSART_ESP32_CTS_PORT,
+    .cts_pin = SL_IOSTREAM_EUSART_ESP32_CTS_PIN,
+#endif
+#if defined(SL_IOSTREAM_EUSART_ESP32_RTS_PORT)
+    .rts_port = SL_IOSTREAM_EUSART_ESP32_RTS_PORT,
+    .rts_pin = SL_IOSTREAM_EUSART_ESP32_RTS_PIN,
+#endif
+  };
+
+  sl_iostream_dma_config_t rx_dma_config_esp32 = {.src = (uint8_t *)&SL_IOSTREAM_EUSART_ESP32_PERIPHERAL->RXDATA,
+                                                        .xfer_cfg = IOSTREAM_LDMA_TFER_CFG_PERIPH(SL_IOSTREAM_EUSART_RX_DMA_SIGNAL(SL_IOSTREAM_EUSART_ESP32_PERIPHERAL_NO))};
+
+  sl_iostream_dma_config_t tx_dma_config_esp32 = {.dst = (uint8_t *)&SL_IOSTREAM_EUSART_ESP32_PERIPHERAL->TXDATA,
+                                                        .xfer_cfg = IOSTREAM_LDMA_TFER_CFG_PERIPH(SL_IOSTREAM_EUSART_TX_DMA_SIGNAL(SL_IOSTREAM_EUSART_ESP32_PERIPHERAL_NO))};
+
+  sl_iostream_uart_config_t uart_config_esp32 = {
+    .rx_dma_cfg = rx_dma_config_esp32,
+    .tx_dma_cfg = tx_dma_config_esp32,
+    .rx_buffer = rx_buffer_esp32,
+    .rx_buffer_length = SL_IOSTREAM_EUSART_ESP32_RX_BUFFER_SIZE,
+    .enable_high_frequency = _SL_IOSTREAM_EUSART_ESP32_ENABLE_HIGH_FREQUENCY, 
+    .lf_to_crlf = SL_IOSTREAM_EUSART_ESP32_CONVERT_BY_DEFAULT_LF_TO_CRLF,
+    .rx_when_sleeping = SL_IOSTREAM_EUSART_ESP32_RESTRICT_ENERGY_MODE_TO_ALLOW_RECEPTION,
+    .uart_periph = &uart_periph_esp32
+  };
+  uart_config_esp32.sw_flow_control = SL_IOSTREAM_EUSART_ESP32_FLOW_CONTROL_TYPE == SL_IOSTREAM_EUSART_UART_FLOW_CTRL_SOFT;
+#if defined(SL_IOSTREAM_EUSART_ESP32_ASYNC_TX)
+  uart_config_esp32.async_tx_enabled = SL_IOSTREAM_EUSART_ESP32_ASYNC_TX;
+#else
+  uart_config_esp32.async_tx_enabled = false;
+#endif
+  // Instantiate eusart instance 
+  status = sl_iostream_eusart_init(&sl_iostream_esp32,
+                                  &uart_config_esp32,
+                                  &config_esp32,
+                                  &context_esp32);
+  EFM_ASSERT(status == SL_STATUS_OK);
+
+  
+  // Send VCOM config to WSTK
+  uint8_t flow_control = COS_CONFIG_FLOWCONTROL_NONE;
+  if (!uart_config_esp32.sw_flow_control) {
+    switch (SL_IOSTREAM_EUSART_ESP32_FLOW_CONTROL_TYPE)
+    {
+      case SL_IOSTREAM_EUSART_UART_FLOW_CTRL_NONE:
+      case SL_IOSTREAM_EUSART_UART_FLOW_CTRL_SOFT:
+        flow_control = COS_CONFIG_FLOWCONTROL_NONE;
+        break;
+      case SL_IOSTREAM_EUSART_UART_FLOW_CTRL_CTS:
+        flow_control = COS_CONFIG_FLOWCONTROL_CTS;
+        break;
+      case SL_IOSTREAM_EUSART_UART_FLOW_CTRL_RTS:
+        flow_control = COS_CONFIG_FLOWCONTROL_RTS;
+        break;
+      case SL_IOSTREAM_EUSART_UART_FLOW_CTRL_CTS_RTS:
+        flow_control = COS_CONFIG_FLOWCONTROL_CTS_RTS;
+        break;
+      default:
+        // Invalid flow control type
+        EFM_ASSERT(0);
+        break;
+    }
+  }
+  sl_cos_config_vcom((uint32_t) SL_IOSTREAM_EUSART_ESP32_BAUDRATE, flow_control);
+   
+
+  return status;
+}
 
 sl_status_t sl_iostream_eusart_init_vcom(void)
 {
@@ -211,11 +350,22 @@ void sl_iostream_eusart_init_instances(void)
    
   // Instantiate eusart instance(s) 
   
+  sl_iostream_eusart_init_esp32();
+  
   sl_iostream_eusart_init_vcom();
   
 }
 
 
+void SL_IOSTREAM_EUSART_TX_IRQ_HANDLER(SL_IOSTREAM_EUSART_ESP32_PERIPHERAL_NO)(void)
+{
+  sl_iostream_eusart_irq_handler(&sl_iostream_esp32);
+}
+
+void SL_IOSTREAM_EUSART_RX_IRQ_HANDLER(SL_IOSTREAM_EUSART_ESP32_PERIPHERAL_NO)(void)
+{
+  sl_iostream_eusart_irq_handler(&sl_iostream_esp32);
+}
 void SL_IOSTREAM_EUSART_TX_IRQ_HANDLER(SL_IOSTREAM_EUSART_VCOM_PERIPHERAL_NO)(void)
 {
   sl_iostream_eusart_irq_handler(&sl_iostream_vcom);

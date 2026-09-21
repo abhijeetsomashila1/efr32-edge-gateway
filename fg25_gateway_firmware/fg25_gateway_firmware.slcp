@@ -65,6 +65,12 @@ component:
   vendor: silabs
   id: freertos
 - package: simplicity_sdk
+  instance:
+  - esp32
+  - vcom
+  vendor: silabs
+  id: iostream_eusart
+- package: simplicity_sdk
   vendor: silabs
   id: nvm3_default
 - package: simplicity_sdk
@@ -332,11 +338,6 @@ autoselected_components:
 - package: simplicity_sdk
   vendor: silabs
   id: iostream
-- package: simplicity_sdk
-  instance:
-  - vcom
-  vendor: silabs
-  id: iostream_eusart
 - package: simplicity_sdk
   vendor: silabs
   id: iostream_eusart_core

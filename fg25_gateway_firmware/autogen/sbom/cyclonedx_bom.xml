@@ -10,7 +10,7 @@ referenced in this SBOM.)
 -->
 <bom xmlns="http://cyclonedx.org/schema/bom/1.6" version="1">
   <metadata>
-    <timestamp>2026-09-21T07:02:32Z</timestamp>
+    <timestamp>2026-09-21T11:57:20Z</timestamp>
     <authors>
       <author>
         <name>Silicon Laboratories, Inc.</name>
@@ -1111,16 +1111,6 @@ referenced in this SBOM.)
             <expression>Zlib</expression>
           </licenses>
         </component>
-        <component bom-ref="silabs.simplicity_sdk:2025.12.3:iostream_eusart" type="library">
-          <name>IO Stream: EUSART</name>
-          <version>2025.12.3</version>
-	      <supplier>
-	        <name>Silicon Laboratories, Inc.</name>
-	      </supplier>
-          <licenses>
-            <expression>Zlib</expression>
-          </licenses>
-        </component>
         <component bom-ref="silabs.simplicity_sdk:2025.12.3:iostream_eusart_core" type="library">
           <name>IO Stream: EUSART Core</name>
           <version>2025.12.3</version>
@@ -1796,6 +1786,16 @@ referenced in this SBOM.)
               </component>
             </ancestors>
           </pedigree>
+        </component>
+        <component bom-ref="silabs.simplicity_sdk:2025.12.3:iostream_eusart" type="library">
+          <name>IO Stream: EUSART</name>
+          <version>2025.12.3</version>
+	      <supplier>
+	        <name>Silicon Laboratories, Inc.</name>
+	      </supplier>
+          <licenses>
+            <expression>Zlib</expression>
+          </licenses>
         </component>
       </components>
     </component>
