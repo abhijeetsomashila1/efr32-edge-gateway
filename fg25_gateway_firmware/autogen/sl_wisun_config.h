@@ -54,7 +54,7 @@ extern "C" {
 #define WISUN_CONFIG_NETWORK_NAME               "SCRC_FAN11_FSK_TEST"
 
 //! Wi-SUN network size
-#define WISUN_CONFIG_NETWORK_SIZE               SL_WISUN_NETWORK_SIZE_TEST
+#define WISUN_CONFIG_NETWORK_SIZE               SL_WISUN_NETWORK_SIZE_SMALL
 
 //! Wi-SUN allowed channels
 #define WISUN_CONFIG_ALLOWED_CHANNELS           "0-255"

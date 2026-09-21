@@ -1,6 +1,6 @@
 {
   "networkName": "SCRC_FAN11_FSK_TEST",
-  "networkSize": "SL_WISUN_NETWORK_SIZE_TEST",
+  "networkSize": "SL_WISUN_NETWORK_SIZE_SMALL",
   "deviceType": "SL_WISUN_ROUTER",
   "deviceProfile": null,
   "macAddress": null,
