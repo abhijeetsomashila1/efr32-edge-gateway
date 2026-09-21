@@ -1,0 +1,36 @@
+{
+  "generatedFiles" : [ "rail_config.c", "rail_config.h", "radioconf_generation_log.json" ],
+  "apackName" : "apack_radioConfig",
+  "equality" : {
+    "sdkId" : "com.silabs.sdk.stack.sisdk:2025.12.3",
+    "generatorIds" : [ "visual-studio-code" ],
+    "fileStates" : {
+      "config\\rail\\profile_wisun_fan_1_0.restriction" : {
+        "hash" : 2117324378,
+        "exists" : true
+      },
+      "config\\rail\\radio_settings.radioconf" : {
+        "hash" : 200435869,
+        "exists" : true
+      },
+      "config\\rail\\profile_wisun_fan_1_1.restriction" : {
+        "hash" : -799318069,
+        "exists" : true
+      },
+      "config\\rail\\profile_wisun_han.restriction" : {
+        "hash" : 1685285330,
+        "exists" : true
+      }
+    },
+    "acTrackedFile" : {
+      "apack.info" : {
+        "hash" : -1281438438,
+        "exists" : true
+      }
+    },
+    "generateArgs" : {
+      "partOpn" : "efr32fg25b222f1920im56",
+      "boards" : "brd4002brevA01,brd4271arevA06"
+    }
+  }
+}
