@@ -1,128 +1,118 @@
-/***************************************************************************//**
- * @file app.c
- * @brief Application code
- *******************************************************************************
- * # License
- * <b>Copyright 2024 Silicon Laboratories Inc. www.silabs.com</b>
- *******************************************************************************
- *
- * SPDX-License-Identifier: Zlib
- *
- * The licensor of this software is Silicon Laboratories Inc.
- *
- * This software is provided 'as-is', without any express or implied
- * warranty. In no event will the authors be held liable for any damages
- * arising from the use of this software.
- *
- * Permission is granted to anyone to use this software for any purpose,
- * including commercial applications, and to alter it and redistribute it
- * freely, subject to the following restrictions:
- *
- * 1. The origin of this software must not be misrepresented; you must not
- *    claim that you wrote the original software. If you use this software
- *    in a product, an acknowledgment in the product documentation would be
- *    appreciated but is not required.
- * 2. Altered source versions must be plainly marked as such, and must not be
- *    misrepresented as being the original software.
- * 3. This notice may not be removed or altered from any source distribution.
- *
- ******************************************************************************/
-// -----------------------------------------------------------------------------
-//                                   Includes
-// -----------------------------------------------------------------------------
 #include <stdio.h>
+#include <string.h>
 
 #include "app.h"
 #include "socket.h"
 #include "arpa/inet.h"
-#include <string.h>
+#include "sl_cmsis_os2_common.h"
 
+#define UDP_DESTINATION_PORT 5000
 
-// -----------------------------------------------------------------------------
-//                              Macros and Typedefs
-// -----------------------------------------------------------------------------
-
-// -----------------------------------------------------------------------------
-//                          Static Function Declarations
-// -----------------------------------------------------------------------------
-
-// -----------------------------------------------------------------------------
-//                                Global Variables
-// -----------------------------------------------------------------------------
-static int udp_sock = -1;
-static sockaddr_in6_t br_addr;
-// -----------------------------------------------------------------------------
-//                                Static Variables
-// -----------------------------------------------------------------------------
-
-// -----------------------------------------------------------------------------
-//                          Public Function Definitions
-// -----------------------------------------------------------------------------
+static int udp_socket_id = -1;
+static sockaddr_in6_t udp_destination;
 
 static void udp_init(void)
 {
-  udp_sock = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
+  int result;
 
-  if (udp_sock < 0) {
-    printf("Failed to create UDP socket\r\n");
+  /* Create an IPv6 UDP socket */
+  udp_socket_id = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
+
+  if (udp_socket_id < 0) {
+    printf("ERROR: UDP socket() failed\r\n");
     return;
   }
 
-  memset(&br_addr, 0, sizeof(br_addr));
+  printf("UDP socket created: %d\r\n", udp_socket_id);
 
-  br_addr.sin6_family = AF_INET6;
-  br_addr.sin6_port = htons(5000);
+  /* Clear destination structure */
+  memset(&udp_destination, 0, sizeof(udp_destination));
 
-  inet_pton(AF_INET6,
-            "fd12:3456::92fd:9fff:feee:9d54", //Border Router IPv6
-            &br_addr.sin6_addr);
+  /* Destination = IPv6 */
+  udp_destination.sin6_family = AF_INET6;
 
-  printf("UDP socket created\r\n");
+  /* Destination = UDP port 5000 */
+  udp_destination.sin6_port = htons(UDP_DESTINATION_PORT);
+
+  /*
+   * Raspberry Pi Border Router IPv6 address.
+   *
+   * This is the address you showed earlier.
+   */
+  result = inet_pton(
+      AF_INET6,
+      "fd12:3456::92fd:9fff:feee:9d54",
+      &udp_destination.sin6_addr);
+
+  if (result != 1) {
+    printf("ERROR: inet_pton() failed\r\n");
+
+    close(udp_socket_id);
+    udp_socket_id = -1;
+
+    return;
+  }
+
+  printf("UDP destination configured\r\n");
 }
 
 static void udp_send_test(void)
 {
-  const char *msg = "hello from fg25";
+  const char message[] = "hello from FG25";
 
-  if (udp_sock < 0) {
+  ssize_t result;
+
+  if (udp_socket_id < 0) {
+    printf("ERROR: UDP socket is not available\r\n");
     return;
   }
 
-  int ret = sendto(udp_sock,
-                   msg,
-                   strlen(msg),
-                   0,
-                   (const struct sockaddr *)&br_addr,
-                   sizeof(br_addr));
+  result = sendto(
+      udp_socket_id,
+      message,
+      sizeof(message) - 1,
+      0,
+      (const struct sockaddr *)&udp_destination,
+      sizeof(udp_destination));
 
-  printf("UDP send result = %d\r\n", ret);
-}
-
-/* App task function */
-void app_task(void *args)
-{
-  (void) args;
-
-  // connect to the wisun network
-  sl_wisun_app_core_util_connect_and_wait();
-
-   printf("Wi-SUN connected\r\n");
-
-  udp_init();
-
-
-  while (1) {
-    ///////////////////////////////////////////////////////////////////////////
-    // Put your application code here!                                       //
-    ///////////////////////////////////////////////////////////////////////////
-    udp_send_test();
-
-    osDelay(10000);
-
-    sl_wisun_app_core_util_dispatch_thread();
+  if (result < 0) {
+    printf("ERROR: sendto() failed\r\n");
+  } else {
+    printf("UDP packet sent: %ld bytes\r\n", (long)result);
   }
 }
 
-// -----------------------------------------------------------------------------
-//                          Static Function Definitions
-// -----------------------------------------------------------------------------
+void app_task(void *args)
+{
+  (void)args;
+
+  /*
+   * Wait until the FG25 has successfully joined the Wi-SUN network.
+   */
+  sl_wisun_app_core_util_connect_and_wait();
+
+  printf("Wi-SUN connected\r\n");
+
+  /*
+   * Create our own UDP client socket.
+   */
+  udp_init();
+
+  while (1) {
+
+    /*
+     * Send one test packet.
+     */
+    udp_send_test();
+
+    /*
+     * Allow the Wi-SUN event system to process events.
+     */
+    sl_wisun_app_core_util_dispatch_thread();
+
+    /*
+     * Wait 10 seconds before sending another packet.
+     */
+    osDelay(10000);
+  }
+}
