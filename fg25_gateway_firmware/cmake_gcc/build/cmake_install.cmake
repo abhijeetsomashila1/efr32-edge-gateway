@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/absom/SimplicityStudio/v6_workspace/fg25_gateway_firmware/cmake_gcc
+# Install script for directory: C:/Users/absom/OneDrive/Desktop/SCRC Files/efr32-edge-gateway/fg25_gateway_firmware/cmake_gcc
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -52,6 +52,6 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-  file(WRITE "C:/Users/absom/SimplicityStudio/v6_workspace/fg25_gateway_firmware/cmake_gcc/build/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "C:/Users/absom/OneDrive/Desktop/SCRC Files/efr32-edge-gateway/fg25_gateway_firmware/cmake_gcc/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

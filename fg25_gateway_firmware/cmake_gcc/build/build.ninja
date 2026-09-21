@@ -13,7 +13,7 @@ build slc: phony slc$:base
 
 
 #############################################
-# Folder: C:/Users/absom/SimplicityStudio/v6_workspace/fg25_gateway_firmware/cmake_gcc/build
+# Folder: C:/Users/absom/OneDrive/Desktop/SCRC Files/efr32-edge-gateway/fg25_gateway_firmware/cmake_gcc/build
 
 build all: phony all$:base
 

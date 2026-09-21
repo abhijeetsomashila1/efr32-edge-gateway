@@ -51,10 +51,10 @@ extern "C" {
 #endif
 
 //! Wi-SUN network name
-#define WISUN_CONFIG_NETWORK_NAME               "Wi-SUN Network"
+#define WISUN_CONFIG_NETWORK_NAME               "SCRC_FAN11_FSK_TEST"
 
 //! Wi-SUN network size
-#define WISUN_CONFIG_NETWORK_SIZE               SL_WISUN_NETWORK_SIZE_SMALL
+#define WISUN_CONFIG_NETWORK_SIZE               SL_WISUN_NETWORK_SIZE_TEST
 
 //! Wi-SUN allowed channels
 #define WISUN_CONFIG_ALLOWED_CHANNELS           "0-255"
@@ -67,10 +67,10 @@ extern const sl_wisun_channel_mask_t wisun_config_allowed_channels_mask;
 #define WISUN_CONFIG_REGULATORY_DOMAIN          3
 
 //! Wi-SUN default PHY - Channel Plan ID
-#define WISUN_CONFIG_CHANNEL_PLAN_ID            32
+#define WISUN_CONFIG_CHANNEL_PLAN_ID            33
 
 //! Wi-SUN default PHY - PHY Mode ID
-#define WISUN_CONFIG_PHY_MODE_ID                1
+#define WISUN_CONFIG_PHY_MODE_ID                5
 
 //! Wi-SUN Broadcast retries
 #define WISUN_CONFIG_BROADCAST_RETRIES          2

@@ -58,7 +58,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = C:\Users\absom\.silabs\slt\installs\conan\p\cmakefa35ab0687064\p\bin\cmake.exe --regenerate-during-build -SC:\Users\absom\SimplicityStudio\v6_workspace\fg25_gateway_firmware\cmake_gcc -BC:\Users\absom\SimplicityStudio\v6_workspace\fg25_gateway_firmware\cmake_gcc\build
+  command = C:\Users\absom\.silabs\slt\installs\conan\p\cmakefa35ab0687064\p\bin\cmake.exe --regenerate-during-build -S"C:\Users\absom\OneDrive\Desktop\SCRC Files\efr32-edge-gateway\fg25_gateway_firmware\cmake_gcc" -B"C:\Users\absom\OneDrive\Desktop\SCRC Files\efr32-edge-gateway\fg25_gateway_firmware\cmake_gcc\build"
   description = Re-running CMake...
   generator = 1
 

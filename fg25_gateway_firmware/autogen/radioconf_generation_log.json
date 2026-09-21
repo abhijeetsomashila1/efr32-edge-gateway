@@ -1,6 +1,6 @@
 [
   {
-    "channel_name": "WiSunConf_Protocol_Configuration_1-WiSunConf_Channel_Group_1",
+    "channel_name": "WiSunConf_Protocol_Configuration_1-Channel_Group_1",
     "result_code": "0",
     "error_message": "",
     "logs": [],
@@ -11,7 +11,7 @@
       },
       {
         "name": "Channel Spacing",
-        "value": 100000
+        "value": 200000
       },
       {
         "name": "RF Frequency Planning Band",
@@ -19,15 +19,15 @@
       },
       {
         "name": "Actual TX Baudrate [baud]",
-        "value": 50000.0
+        "value": 150000.0
       },
       {
         "name": "Calculated RSSI Offset [dB]",
-        "value": -16.267345052959936
+        "value": -17.883615940022892
       },
       {
         "name": "Preamble Binary Pattern",
-        "value": "0101010101010101010101010101010101010101010101010101010101010101"
+        "value": "010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101"
       },
       {
         "name": "Syncword Binary Pattern",
@@ -35,11 +35,11 @@
       },
       {
         "name": "Pre Signal Lock RX Bandwidth [Hz]",
-        "value": 129048
+        "value": 249048
       },
       {
         "name": "Desired Bitrate [bps]",
-        "value": 50000.0
+        "value": 150000.0
       },
       {
         "name": "Actual Carrier Frequency [Hz]",
@@ -47,7 +47,7 @@
       },
       {
         "name": "Actual Intermediate Frequency [Hz]",
-        "value": 114505
+        "value": 174510
       },
       {
         "name": "Synthesizer Resolution [Hz]",
@@ -63,11 +63,11 @@
       },
       {
         "name": "Actual RX Baudrate [baud]",
-        "value": 49999.99107947876
+        "value": 149999.88450279325
       },
       {
         "name": "Actual Deviation [Hz]",
-        "value": 12562.036514282227
+        "value": 37490.8447265625
       },
       {
         "name": "Target Modulation Index",
@@ -75,7 +75,7 @@
       },
       {
         "name": "Actual Modulation Index",
-        "value": 0.5024814605712891
+        "value": 0.4998779296875
       },
       {
         "name": "Selected Demodulator",
@@ -83,11 +83,11 @@
       },
       {
         "name": "Carson Bandwidth [Hz]",
-        "value": 75000
+        "value": 225000
       },
       {
         "name": "Theoretical Required Demodulator Bandwidth [Hz]",
-        "value": 55000
+        "value": 165000
       },
       {
         "name": "RX Crystal Accuracy [ppm]",
@@ -99,7 +99,7 @@
       },
       {
         "name": "Post Signal Lock RX Bandwidth [Hz]",
-        "value": 64484
+        "value": 165000
       },
       {
         "name": "RSSI Measurement Period",
@@ -107,15 +107,15 @@
       },
       {
         "name": "Actual Demodulator Oversampling Rate",
-        "value": 5.999999999999999
+        "value": 4.0
       },
       {
         "name": "Raw Data Sampling Rate [sps]",
-        "value": 299999.94647687254
+        "value": 599999.538011173
       },
       {
         "name": "Signal Propagation Delay [symbol]",
-        "value": 7
+        "value": 10
       },
       {
         "name": "Effective Syncword Length",
@@ -123,7 +123,7 @@
       },
       {
         "name": "Effective Preamble Length",
-        "value": 64
+        "value": 96
       },
       {
         "name": "Number of Bits Used from Preamble to Syncword [bits]",
@@ -135,7 +135,7 @@
       },
       {
         "name": "TRECS syncword timeout [us]",
-        "value": 1760.0
+        "value": 800.0
       },
       {
         "name": "RSSI Update Period [symbol]",
@@ -143,7 +143,7 @@
       },
       {
         "name": "RSSI Access Time After RX Start [us]",
-        "value": 373.5128866723818
+        "value": 148.51293230789864
       }
     ]
   }

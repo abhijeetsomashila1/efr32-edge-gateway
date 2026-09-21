@@ -69,12 +69,12 @@ const RAIL_RffpllConfig_t *radioConfigRffpllConfig = (RAIL_RffpllConfig_t *) rff
 
 #if RAIL_SUPPORTS_HFXO_COMPENSATION
 static const uint16_t modemTxCompensation[33] = {
-  0x2b74, 0xce67, 0x273a, 0x275f, 0xd881, 0x3121, 0x2378, 0xe2ab, 0x4120, 0x1f70, 0xecff, 0x611e, 0x1b70, 0xf602, 0xc3, 0x1770, 0x00fe, 0x60bd, 0x1370, 0x0a02, 0xc3, 0xf70, 0x14ff, 0x611f, 0xb78, 0x1eab, 0x4121, 0x75f, 0x2881, 0x3122, 0x374, 0x3267, 0x273b
+  0x2bd2, 0xce02, 0x41, 0x27d2, 0xd802, 0x41, 0x23d2, 0xe202, 0x41, 0x1fd2, 0xec02, 0x41, 0x1bd2, 0xf602, 0x41, 0x17b2, 0x00fe, 0x203f, 0x13d2, 0x0a02, 0x41, 0xfd2, 0x1402, 0x41, 0xbd2, 0x1e02, 0x41, 0x7d2, 0x2802, 0x41, 0x3d2, 0x3202, 0x41
 };
 #endif
 
 static const int32_t timingConfig[] = {
-  139967, 139967, 20000, 0
+  58383, 58383, 6667, 0
 };
 
 __ALIGNED(4) static const uint8_t hfxoRetimingConfigEntries[] = {
@@ -82,7 +82,7 @@ __ALIGNED(4) static const uint8_t hfxoRetimingConfigEntries[] = {
 };
 
 #ifdef RADIO_CONFIG_ENABLE_STACK_INFO
-__ALIGNED(4) static const uint8_t stackInfo_0[5] = { 0x07,  0x01,  0x01,  0x20, 0x03 };
+__ALIGNED(4) static const uint8_t stackInfo_0[5] = { 0x07,  0x05,  0x01,  0x21, 0x03 };
 #endif // RADIO_CONFIG_ENABLE_STACK_INFO
 
 static RAIL_ChannelConfigEntryAttr_t channelConfigEntryAttr = {
@@ -106,22 +106,22 @@ static RAIL_ChannelConfigEntryAttr_t channelConfigEntryAttr = {
 
 static const uint32_t phyInfo[] = {
   20UL,
-  0x0021DCC8UL, // 33.86243386243387
+  0x00307C1FUL, // 48.48484848484848
   (uint32_t) NULL,
   (uint32_t) irCalConfig,
   (uint32_t) timingConfig,
   0x00000000UL,
   0UL,
   0UL,
-  50000UL,
-  0x00F00101UL,
-  0x0710120AUL,
+  150000UL,
+  0x00EE0101UL,
+  0x07101B7EUL,
   (uint32_t) NULL,
   (uint32_t) hfxoRetimingConfigEntries,
   (uint32_t) NULL,
   0UL,
   0UL,
-  50000UL,
+  150000UL,
   (uint32_t) rffpllConfig,
   (uint32_t) txIrCalConfig,
 #if RAIL_SUPPORTS_HFXO_COMPENSATION
@@ -172,10 +172,10 @@ const uint32_t WiSunConf_Protocol_Configuration_1_modemConfigBase[] = {
   /*    C040 */ 0x00000000UL,
   /*    C044 */ 0x00000000UL,
   0x0114C054UL, 0x00302187UL,
-  /*    C058 */ 0xE6A500B1UL,
-  /*    C05C */ 0x00000213UL,
-  /*    C060 */ 0x9F968561UL,
-  /*    C064 */ 0x000000A5UL,
+  /*    C058 */ 0xE66C0074UL,
+  /*    C05C */ 0x0000015CUL,
+  /*    C060 */ 0x68635740UL,
+  /*    C064 */ 0x0000006CUL,
   /*    C068 */ 0x0002C688UL,
   /*    C06C */ 0x000004A0UL,
   /*    C070 */ 0x000010BAUL,
@@ -196,7 +196,7 @@ const uint32_t WiSunConf_Protocol_Configuration_1_modemConfigBase[] = {
   /*    C0B0 */ 0x76543210UL,
   /*    C0B4 */ 0x00000A98UL,
   /*    C0B8 */ 0x00000000UL,
-  0x0104C0CCUL, 0x000001FEUL,
+  0x0104C0CCUL, 0x000000EEUL,
   /*    C0D0 */ 0x00000000UL,
   /*    C0D4 */ 0x000A0001UL,
   /*    C0D8 */ 0x00280001UL,
@@ -207,24 +207,24 @@ const uint32_t WiSunConf_Protocol_Configuration_1_modemConfigBase[] = {
   0x02010008UL, 0x0000170EUL,
   0x02010018UL, 0xFFFFFFFFUL,
   0x02010020UL, 0xEDB88320UL,
-  0x02024040UL, 0x20F00000UL,
+  0x02024040UL, 0x30B00000UL,
   /*    4044 */ 0x00000000UL,
   0x0209404CUL, 0x04000000UL,
   /*    4050 */ 0x0082C22FUL,
-  /*    4054 */ 0x20000000UL,
+  /*    4054 */ 0x00000000UL,
   /*    4058 */ 0x00000000UL,
   /*    405C */ 0x03000000UL,
   /*    4060 */ 0x40001000UL,
   /*    4064 */ 0x00000000UL,
-  /*    4068 */ 0x00FE60BDUL,
-  /*    406C */ 0x00000C40UL,
-  0x02194074UL, 0x00200012UL,
+  /*    4068 */ 0x00FE203FUL,
+  /*    406C */ 0x00000840UL,
+  0x02194074UL, 0x00300012UL,
   /*    4078 */ 0x00007209UL,
   /*    407C */ 0x00007209UL,
-  /*    4080 */ 0x00000F28UL,
+  /*    4080 */ 0x00001F50UL,
   /*    4084 */ 0x00000000UL,
-  /*    4088 */ 0x001A0370UL,
-  /*    408C */ 0x62040000UL,
+  /*    4088 */ 0x000803B2UL,
+  /*    408C */ 0x62060000UL,
   /*    4090 */ 0x00000000UL,
   /*    4094 */ 0x0A000000UL,
   /*    4098 */ 0x5454544AUL,
@@ -251,10 +251,10 @@ const uint32_t WiSunConf_Protocol_Configuration_1_modemConfigBase[] = {
   /*    4130 */ 0x078304FFUL,
   /*    4134 */ 0x03FF1388UL,
   /*    4138 */ 0xF00A20BCUL,
-  0x02054140UL, 0x40983881UL,
+  0x02054140UL, 0x40A96701UL,
   /*    4144 */ 0x904E0000UL,
-  /*    4148 */ 0x41E9BC9AUL,
-  /*    414C */ 0x00403B8BUL,
+  /*    4148 */ 0x4148A1ACUL,
+  /*    414C */ 0x00403B89UL,
   /*    4150 */ 0x800003C0UL,
   0x02024158UL, 0x00000000UL,
   /*    415C */ 0x0000FDFFUL,
@@ -272,7 +272,7 @@ const uint32_t WiSunConf_Protocol_Configuration_1_modemConfigBase[] = {
   /*    4194 */ 0x00000000UL,
   0x020141A4UL, 0x00000000UL,
   0x020C41B0UL, 0x00000000UL,
-  /*    41B4 */ 0xC02DD0B4UL,
+  /*    41B4 */ 0xC02FD568UL,
   /*    41B8 */ 0x00000000UL,
   /*    41BC */ 0x00000000UL,
   /*    41C0 */ 0x003C0000UL,
@@ -280,16 +280,16 @@ const uint32_t WiSunConf_Protocol_Configuration_1_modemConfigBase[] = {
   /*    41C8 */ 0x00000000UL,
   /*    41CC */ 0x00000000UL,
   /*    41D0 */ 0x55555555UL,
-  /*    41D4 */ 0x805801DFUL,
-  /*    41D8 */ 0x00020006UL,
+  /*    41D4 */ 0x809000E7UL,
+  /*    41D8 */ 0x000A0004UL,
   /*    41DC */ 0x00000000UL,
-  0x02024224UL, 0x00000058UL,
+  0x02024224UL, 0x00000078UL,
   /*    4228 */ 0x00000000UL,
   0x02024230UL, 0x00000000UL,
   /*    4234 */ 0x00000000UL,
   0x0201423CUL, 0x00000000UL,
   0x02014244UL, 0x90000014UL,
-  0x0201424CUL, 0x04050008UL,
+  0x0201424CUL, 0x04030008UL,
   0x020F4330UL, 0x00000000UL,
   /*    4334 */ 0x00000000UL,
   /*    4338 */ 0x00000000UL,
@@ -305,9 +305,9 @@ const uint32_t WiSunConf_Protocol_Configuration_1_modemConfigBase[] = {
   /*    4360 */ 0x00000000UL,
   /*    4364 */ 0x00000000UL,
   /*    4368 */ 0x58FF0000UL,
-  0x02014400UL, 0x00000110UL,
+  0x02014400UL, 0x000000D0UL,
   0x02018010UL, 0x00000003UL,
-  0x02028038UL, 0x0010120AUL,
+  0x02028038UL, 0x00101B7EUL,
   /*    803C */ 0x00000003UL,
   0x020280A0UL, 0x0003B870UL,
   /*    80A4 */ 0x0003B870UL,
@@ -334,7 +334,7 @@ const uint32_t WiSunConf_Protocol_Configuration_1_modemConfigBase[] = {
   0x3301012CUL, 0x008002E9UL,
   0x03010140UL, 0x0000003FUL,
   0x13010150UL, 0x0001C000UL,
-  0x33010150UL, 0x00A200C8UL,
+  0x33010150UL, 0x00A200C4UL,
   0x03010168UL, 0x00060010UL,
   0x1301016CUL, 0x00200820UL,
   0x3301016CUL, 0x000C0000UL,
@@ -349,8 +349,8 @@ const uint32_t WiSunConf_Protocol_Configuration_1_modemConfigBase[] = {
   0x03010208UL, 0x00200008UL,
   0x03010210UL, 0x00001100UL,
   0x13010400UL, 0x00000008UL,
-  0x05120100UL, 0x000000A0UL,
-  /*    0104 */ 0x0808990FUL,
+  0x05120100UL, 0x00000050UL,
+  /*    0104 */ 0x08083503UL,
   /*    0108 */ 0x00000000UL,
   /*    010C */ 0x0BFFE7E6UL,
   /*    0110 */ 0x000AA1CDUL,
@@ -359,15 +359,15 @@ const uint32_t WiSunConf_Protocol_Configuration_1_modemConfigBase[] = {
   /*    011C */ 0x0E42027DUL,
   /*    0120 */ 0x0222B6A5UL,
   /*    0124 */ 0x34B225FFUL,
-  /*    0128 */ 0x0C81901EUL,
-  /*    012C */ 0x0006490CUL,
-  /*    0130 */ 0x006DDFA8UL,
-  /*    0134 */ 0x00B10BC0UL,
-  /*    0138 */ 0x05020AE8UL,
-  /*    013C */ 0x00A53D18UL,
-  /*    0140 */ 0x1DD71B27UL,
+  /*    0128 */ 0x365E63DEUL,
+  /*    012C */ 0x00076FBFUL,
+  /*    0130 */ 0x0016EA6FUL,
+  /*    0134 */ 0x00CE30E5UL,
+  /*    0138 */ 0x0494844BUL,
+  /*    013C */ 0x0ED9B9B2UL,
+  /*    0140 */ 0x24A91F5AUL,
   /*    0144 */ 0x80000000UL,
-  0x05010180UL, 0x00504545UL,
+  0x05010180UL, 0x00506992UL,
   0x05020200UL, 0x00145463UL,
   /*    0204 */ 0x00000000UL,
   0x050B8100UL, 0x00000000UL,
@@ -398,10 +398,10 @@ const RAIL_ChannelConfigEntry_t WiSunConf_Protocol_Configuration_1_channels[] = 
   {
     .phyConfigDeltaAdd = NULL,
     .baseFrequency = 863100000,
-    .channelSpacing = 100000,
-    .physicalChannelOffset = 256,
-    .channelNumberStart = 256,
-    .channelNumberEnd = 324,
+    .channelSpacing = 200000,
+    .physicalChannelOffset = 1280,
+    .channelNumberStart = 1280,
+    .channelNumberEnd = 1314,
     .maxPower = RAIL_TX_POWER_MAX,
     .attr = &channelConfigEntryAttr,
 #ifdef RADIO_CONFIG_ENABLE_CONC_PHY
@@ -432,8 +432,8 @@ const uint8_t wisun_modeSwitchPhrsLength = WISUN_MODESWITCHPHRS_ARRAY_SIZE;
 
 const RAIL_IEEE802154_ModeSwitchPhr_t wisun_modeSwitchPhrs[WISUN_MODESWITCHPHRS_ARRAY_SIZE] = {
   {
-    .phyModeId = 1U,
-    .phr = 11265U,
+    .phyModeId = 5U,
+    .phr = 46337U,
   },
 };
 

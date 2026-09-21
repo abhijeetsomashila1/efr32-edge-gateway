@@ -1,4 +1,4 @@
-C:/Users/absom/SimplicityStudio/v6_workspace/fg25_gateway_firmware/cmake_gcc/build/CMakeFiles/slc.dir
-C:/Users/absom/SimplicityStudio/v6_workspace/fg25_gateway_firmware/cmake_gcc/build/CMakeFiles/fg25_gateway_firmware.dir
-C:/Users/absom/SimplicityStudio/v6_workspace/fg25_gateway_firmware/cmake_gcc/build/CMakeFiles/edit_cache.dir
-C:/Users/absom/SimplicityStudio/v6_workspace/fg25_gateway_firmware/cmake_gcc/build/CMakeFiles/rebuild_cache.dir
+C:/Users/absom/OneDrive/Desktop/SCRC Files/efr32-edge-gateway/fg25_gateway_firmware/cmake_gcc/build/CMakeFiles/slc.dir
+C:/Users/absom/OneDrive/Desktop/SCRC Files/efr32-edge-gateway/fg25_gateway_firmware/cmake_gcc/build/CMakeFiles/fg25_gateway_firmware.dir
+C:/Users/absom/OneDrive/Desktop/SCRC Files/efr32-edge-gateway/fg25_gateway_firmware/cmake_gcc/build/CMakeFiles/edit_cache.dir
+C:/Users/absom/OneDrive/Desktop/SCRC Files/efr32-edge-gateway/fg25_gateway_firmware/cmake_gcc/build/CMakeFiles/rebuild_cache.dir
