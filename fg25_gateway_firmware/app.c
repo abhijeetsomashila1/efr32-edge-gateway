@@ -5,9 +5,12 @@
 #include "socket.h"
 #include "arpa/inet.h"
 #include "sl_cmsis_os2_common.h"
+#include "sl_iostream.h"
 
 #define UDP_DESTINATION_PORT 5000
 
+//Global Variables
+static sl_iostream_t *esp32_stream = NULL;
 static int udp_socket_id = -1;
 static sockaddr_in6_t udp_destination;
 
@@ -82,6 +85,21 @@ static void udp_send_test(void)
   }
 }
 
+
+static void esp32_uart_test(void)
+{
+  char c;
+
+  if (esp32_stream == NULL) {
+    return;
+  }
+
+  while (sl_iostream_getchar(esp32_stream, &c) == SL_STATUS_OK) {
+    printf("ESP32 RX: %c\r\n", c);
+  }
+}
+
+
 void app_task(void *args)
 {
   (void)args;
@@ -98,6 +116,15 @@ void app_task(void *args)
    */
   udp_init();
 
+  esp32_stream = sl_iostream_get_handle("esp32");
+
+  if (esp32_stream == NULL) {
+  printf("ERROR: ESP32 IO Stream not found\r\n");
+  return;
+  }
+
+  printf("ESP32 IO Stream ready\r\n");
+
   while (1) {
 
     /*
@@ -109,6 +136,7 @@ void app_task(void *args)
      * Allow the Wi-SUN event system to process events.
      */
     sl_wisun_app_core_util_dispatch_thread();
+    esp32_uart_test();
 
     /*
      * Wait 10 seconds before sending another packet.
