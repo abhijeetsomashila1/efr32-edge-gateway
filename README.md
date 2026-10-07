@@ -48,7 +48,7 @@ The BRD4271A is mounted on the WSTK.
 Repository name:
 
 ```text
-wisun-uart-gateway
+efr32-uart-gateway
 ```
 
 The project is being tracked with Git/GitHub.
