@@ -19,6 +19,7 @@ sl_debug_swo_config.h=-283844124
 sl_device_init_dcdc_config.h=-223580250
 sl_device_init_emu_config.h=1253289061
 sl_event_system_config.h=295359316
+sl_iostream_eusart_esp32_config.h=34038033
 sl_iostream_eusart_vcom_config.h=-1794177654
 sl_main_start_task_config.h=970954541
 sl_mbedtls_config.h=-1486113646

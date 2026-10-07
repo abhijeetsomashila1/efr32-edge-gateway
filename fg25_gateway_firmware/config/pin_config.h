@@ -94,6 +94,22 @@
 // [I2C1]$
 
 // $[EUSART1]
+// EUSART1 RX on PA06
+#ifndef EUSART1_RX_PORT                         
+#define EUSART1_RX_PORT                          SL_GPIO_PORT_A
+#endif
+#ifndef EUSART1_RX_PIN                          
+#define EUSART1_RX_PIN                           6
+#endif
+
+// EUSART1 TX on PA07
+#ifndef EUSART1_TX_PORT                         
+#define EUSART1_TX_PORT                          SL_GPIO_PORT_A
+#endif
+#ifndef EUSART1_TX_PIN                          
+#define EUSART1_TX_PIN                           7
+#endif
+
 // [EUSART1]$
 
 // $[EUSART2]
