@@ -35,6 +35,7 @@ sl_sleeptimer_config.h=-963322667
 sl_wisun_app_core_config.h=-334695000
 sl_wisun_cli_config.h=-292941577
 sl_wisun_cli_util_config.h=161036039
+sl_wisun_coap_config.h=1843637218
 sl_wisun_keychain_nvm_config.h=172784998
 sl_wisun_ping_config.h=8353401
 sl_wisun_tcp_server_config.h=862977142

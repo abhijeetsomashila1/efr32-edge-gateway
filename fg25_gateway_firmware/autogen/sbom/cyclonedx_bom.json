@@ -3,7 +3,7 @@
   "specVersion" : "1.6",
   "version" : 1,
   "metadata" : {
-    "timestamp" : "2026-09-21T11:57:20Z",
+    "timestamp" : "2026-10-07T06:20:54Z",
     "authors" : [ {
       "name" : "Silicon Laboratories, Inc."
     } ],
@@ -1300,6 +1300,18 @@
     }, {
       "scope" : "required",
       "type" : "library",
+      "bom-ref" : "silabs.simplicity_sdk:2025.12.3:iostream_eusart",
+      "name" : "IO Stream: EUSART",
+      "version" : "2025.12.3",
+      "supplier" : {
+        "name" : "Silicon Laboratories, Inc."
+      },
+      "licenses" : [ {
+        "expression" : "Zlib"
+      } ]
+    }, {
+      "scope" : "required",
+      "type" : "library",
       "bom-ref" : "silabs.simplicity_sdk:2025.12.3:iostream_eusart_core",
       "name" : "IO Stream: EUSART Core",
       "version" : "2025.12.3",
@@ -2108,15 +2120,31 @@
     }, {
       "scope" : "required",
       "type" : "library",
-      "bom-ref" : "silabs.simplicity_sdk:2025.12.3:iostream_eusart",
-      "name" : "IO Stream: EUSART",
+      "bom-ref" : "silabs.simplicity_sdk:2025.12.3:sl_wisun_coap",
+      "name" : "Wi-SUN CoAP",
       "version" : "2025.12.3",
       "supplier" : {
         "name" : "Silicon Laboratories, Inc."
       },
       "licenses" : [ {
-        "expression" : "Zlib"
-      } ]
+        "expression" : "Zlib AND Apache-2.0"
+      } ],
+      "pedigree" : {
+        "ancestors" : [ {
+          "scope" : "required",
+          "type" : "library",
+          "bom-ref" : "sl_wisun_coap:5.1.9",
+          "name" : "mbed-coap",
+          "version" : "5.1.9",
+          "supplier" : {
+            "name" : "Pelion and affiliates"
+          },
+          "externalReferences" : [ {
+            "type" : "website",
+            "url" : "https://github.com/PelionIoT/mbed-coap/tree/v5.1.9"
+          } ]
+        } ]
+      }
     } ]
   } ]
 }

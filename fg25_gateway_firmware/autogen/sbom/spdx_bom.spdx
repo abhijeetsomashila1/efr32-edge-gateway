@@ -13,7 +13,7 @@ DocumentNamespace: https://silabs.com
 
 ## Creation Information
 Creator: Organization: Silicon Laboratories, Inc.
-Created: 2026-09-21T11:57:20Z
+Created: 2026-10-07T06:20:54Z
 ## Relationships
 Relationship: SPDXRef-DOCUMENT DESCRIBES SPDXRef-silabs.simplicity_sdk-2025.12.3
 
@@ -120,6 +120,7 @@ Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3 CONTAINS SPDXRef-silabs.si
 Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3 CONTAINS SPDXRef-silabs.simplicity_sdk-2025.12.3-interrupt_manager
 Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3 CONTAINS SPDXRef-silabs.simplicity_sdk-2025.12.3-interrupt_manager_cortexm
 Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3 CONTAINS SPDXRef-silabs.simplicity_sdk-2025.12.3-iostream
+Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3 CONTAINS SPDXRef-silabs.simplicity_sdk-2025.12.3-iostream_eusart
 Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3 CONTAINS SPDXRef-silabs.simplicity_sdk-2025.12.3-iostream_eusart_core
 Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3 CONTAINS SPDXRef-silabs.simplicity_sdk-2025.12.3-iostream_recommended_stream
 Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3 CONTAINS SPDXRef-silabs.simplicity_sdk-2025.12.3-iostream_retarget_stdio
@@ -186,7 +187,7 @@ Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3 CONTAINS SPDXRef-silabs.si
 Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3 CONTAINS SPDXRef-silabs.simplicity_sdk-2025.12.3-wisun_crypto
 Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3 CONTAINS SPDXRef-silabs.simplicity_sdk-2025.12.3-wisun_keychain
 Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3 CONTAINS SPDXRef-silabs.simplicity_sdk-2025.12.3-wisun_stack_library
-Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3 CONTAINS SPDXRef-silabs.simplicity_sdk-2025.12.3-iostream_eusart
+Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3 CONTAINS SPDXRef-silabs.simplicity_sdk-2025.12.3-sl_wisun_coap
 
 ## Package Information
 PackageName: EFR32FG25B222F1920IM56
@@ -1337,6 +1338,17 @@ PackageLicenseConcluded: Zlib
 Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3-iostream CONTAINED_BY SPDXRef-silabs.simplicity_sdk-2025.12.3
 
 ## Package Information
+PackageName: IO Stream: EUSART
+SPDXID: SPDXRef-silabs.simplicity_sdk-2025.12.3-iostream_eusart
+PackageVersion: 2025.12.3
+PrimaryPackagePurpose: LIBRARY
+PackageDownloadLocation: NOASSERTION
+PackageSupplier: Organization: Silicon Laboratories, Inc.
+PackageLicenseConcluded: Zlib
+## Relationships
+Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3-iostream_eusart CONTAINED_BY SPDXRef-silabs.simplicity_sdk-2025.12.3
+
+## Package Information
 PackageName: IO Stream: EUSART Core
 SPDXID: SPDXRef-silabs.simplicity_sdk-2025.12.3-iostream_eusart_core
 PackageVersion: 2025.12.3
@@ -2076,12 +2088,25 @@ PackageHomePage: https://github.com/ARMmbed/mbed-os/tree/9957e7b4ae4315e6d1d2bc0
 Relationship: SPDXRef-wisun_stack_library-14.0.0 DESCENDANT_OF SPDXRef-silabs.simplicity_sdk-2025.12.3-wisun_stack_library
 
 ## Package Information
-PackageName: IO Stream: EUSART
-SPDXID: SPDXRef-silabs.simplicity_sdk-2025.12.3-iostream_eusart
+PackageName: Wi-SUN CoAP
+SPDXID: SPDXRef-silabs.simplicity_sdk-2025.12.3-sl_wisun_coap
 PackageVersion: 2025.12.3
 PrimaryPackagePurpose: LIBRARY
 PackageDownloadLocation: NOASSERTION
 PackageSupplier: Organization: Silicon Laboratories, Inc.
-PackageLicenseConcluded: Zlib
+PackageLicenseConcluded: Zlib AND Apache-2.0
 ## Relationships
-Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3-iostream_eusart CONTAINED_BY SPDXRef-silabs.simplicity_sdk-2025.12.3
+Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3-sl_wisun_coap CONTAINED_BY SPDXRef-silabs.simplicity_sdk-2025.12.3
+Relationship: SPDXRef-silabs.simplicity_sdk-2025.12.3-sl_wisun_coap ANCESTOR_OF SPDXRef-sl_wisun_coap-5.1.9
+
+## Package Information
+PackageName: mbed-coap
+SPDXID: SPDXRef-sl_wisun_coap-5.1.9
+PackageVersion: 5.1.9
+PrimaryPackagePurpose: LIBRARY
+PackageDownloadLocation: NOASSERTION
+PackageSupplier: Organization: Pelion and affiliates
+PackageOriginator: Organization: NOASSERTION
+PackageHomePage: https://github.com/PelionIoT/mbed-coap/tree/v5.1.9
+## Relationships
+Relationship: SPDXRef-sl_wisun_coap-5.1.9 DESCENDANT_OF SPDXRef-silabs.simplicity_sdk-2025.12.3-sl_wisun_coap
