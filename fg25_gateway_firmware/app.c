@@ -33,6 +33,8 @@
 #include <stdio.h>
 
 #include "app.h"
+#include "app_coap.h"
+#include "sl_cmsis_os2_common.h"
 // -----------------------------------------------------------------------------
 //                              Macros and Typedefs
 // -----------------------------------------------------------------------------
@@ -60,11 +62,24 @@ void app_task(void *args)
   // connect to the wisun network
   sl_wisun_app_core_util_connect_and_wait();
 
+  printf("Wi-SUN connected\r\n");
+
+ printf("Calling app_coap_init()\r\n");
+
+  /* Register our CoAP resources. */
+  app_coap_init();
+
+ printf("Returned from app_coap_init()\r\n");
+
+
+
+
   while (1) {
     ///////////////////////////////////////////////////////////////////////////
     // Put your application code here!                                       //
     ///////////////////////////////////////////////////////////////////////////
     sl_wisun_app_core_util_dispatch_thread();
+    osDelay(10);
   }
 }
 

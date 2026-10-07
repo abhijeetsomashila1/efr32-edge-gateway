@@ -96,6 +96,9 @@ component:
   id: sl_wisun_cli
 - package: simplicity_sdk
   vendor: silabs
+  id: sl_wisun_coap
+- package: simplicity_sdk
+  vendor: silabs
   id: sl_wisun_ping
 - package: simplicity_sdk
   vendor: silabs

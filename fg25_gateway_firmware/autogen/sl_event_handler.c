@@ -16,6 +16,7 @@
 #include "sl_wisun_app_setting_common.h"
 #include "sl_wisun_client_cli.h"
 #include "sl_wisun_cli_core.h"
+#include "sl_wisun_coap.h"
 #include "sl_wisun_event_mgr.h"
 #include "sl_wisun_ping.h"
 #include "sl_wisun_tcp_server.h"
@@ -88,6 +89,7 @@ void sl_stack_init(void)
   sl_rail_util_pa_init();
   sl_rail_util_pti_init();
   sl_wisun_client_cli_init();
+  sl_wisun_coap_init_default();
   sl_wisun_stack_init();
 }
 

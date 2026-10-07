@@ -3,7 +3,7 @@
   "specVersion" : "1.6",
   "version" : 1,
   "metadata" : {
-    "timestamp" : "2026-09-21T07:02:32Z",
+    "timestamp" : "2026-10-07T06:20:54Z",
     "authors" : [ {
       "name" : "Silicon Laboratories, Inc."
     } ],
@@ -2114,6 +2114,34 @@
           "externalReferences" : [ {
             "type" : "website",
             "url" : "https://github.com/ARMmbed/mbed-os/tree/9957e7b4ae4315e6d1d2bc064c469e69fb34ff78/features/nanostack"
+          } ]
+        } ]
+      }
+    }, {
+      "scope" : "required",
+      "type" : "library",
+      "bom-ref" : "silabs.simplicity_sdk:2025.12.3:sl_wisun_coap",
+      "name" : "Wi-SUN CoAP",
+      "version" : "2025.12.3",
+      "supplier" : {
+        "name" : "Silicon Laboratories, Inc."
+      },
+      "licenses" : [ {
+        "expression" : "Zlib AND Apache-2.0"
+      } ],
+      "pedigree" : {
+        "ancestors" : [ {
+          "scope" : "required",
+          "type" : "library",
+          "bom-ref" : "sl_wisun_coap:5.1.9",
+          "name" : "mbed-coap",
+          "version" : "5.1.9",
+          "supplier" : {
+            "name" : "Pelion and affiliates"
+          },
+          "externalReferences" : [ {
+            "type" : "website",
+            "url" : "https://github.com/PelionIoT/mbed-coap/tree/v5.1.9"
           } ]
         } ]
       }
