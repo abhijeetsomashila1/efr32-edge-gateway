@@ -28,8 +28,8 @@ static char ev_response[EV_RESPONSE_SIZE] =
 /* CoAP Content-Format 50 = application/json */
 #define EV_JSON_CONTENT_FORMAT 50U
 
-static uint8_t ev_post_payload[] =
-    "{\"v\":229.2,\"i\":0.44,\"p\":100.8,\"e\":0.125,\"s\":1}";
+// static uint8_t ev_post_payload[] =
+//     "{\"v\":229.2,\"i\":0.44,\"p\":100.8,\"e\":0.125,\"s\":1}";
 
 static sl_wisun_coap_notify_t ev_post_notify;
 
@@ -245,9 +245,8 @@ static sl_wisun_coap_packet_t *ev_post_packet_cb(
     packet.uri_path_len =
         (uint16_t)strlen(EV_POST_URI_PATH);
 
-    packet.payload_ptr = ev_post_payload;
-    packet.payload_len =
-        (uint16_t)(sizeof(ev_post_payload) - 1U);
+    packet.payload_ptr = (uint8_t *)ev_response;
+    packet.payload_len = (uint16_t)strlen(ev_response);
 
     return &packet;
 }
