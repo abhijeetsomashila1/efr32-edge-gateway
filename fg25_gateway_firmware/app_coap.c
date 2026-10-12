@@ -7,6 +7,8 @@
 #include "sl_wisun_coap.h"
 #include "sl_wisun_coap_rhnd.h"
 
+#include "sl_wisun_coap_notify.h"
+
 #define EV_RESOURCE_URI "/ev"
 #define EV_RESPONSE_SIZE 128
 
@@ -16,7 +18,20 @@
  * This is what the CoAP /ev resource returns.
  */
 static char ev_response[EV_RESPONSE_SIZE] =
-    "{\"v\":0.0,\"i\":0.0,\"p\":0.0,\"e\":0.0,\"s\":0}";
+    "{\"v\":229.2,\"i\":0.44,\"p\":100.8,\"e\":0.125,\"s\":1}";
+
+#define EV_POST_URI_PATH       "telemetry/ev"
+#define EV_POST_INTERVAL_MS    5000U
+#define EV_POST_BR_IPV6        "fd12:3456::92fd:9fff:feee:9d54"
+#define EV_POST_BR_PORT        5683U
+
+/* CoAP Content-Format 50 = application/json */
+#define EV_JSON_CONTENT_FORMAT 50U
+
+static uint8_t ev_post_payload[] =
+    "{\"v\":229.2,\"i\":0.44,\"p\":100.8,\"e\":0.125,\"s\":1}";
+
+static sl_wisun_coap_notify_t ev_post_notify;
 
 /* ------------------------------------------------------------------------- */
 /* Forward declarations                                                      */
@@ -196,6 +211,89 @@ coap_callback_ev(
 /* CoAP initialization                                                       */
 /* ------------------------------------------------------------------------- */
 
+static bool ev_post_condition_cb(
+    const sl_wisun_coap_notify_t *notify)
+{
+    (void)notify;
+    return true;
+}
+
+static sl_wisun_coap_packet_t *ev_post_packet_cb(
+    const sl_wisun_coap_notify_t *notify)
+{
+    static uint16_t next_msg_id = 1U;
+
+    static sl_wisun_coap_packet_t packet = {
+        .msg_code = COAP_MSG_CODE_REQUEST_POST,
+        .msg_id = 0U,
+        .msg_type = COAP_MSG_TYPE_NON_CONFIRMABLE,
+        .content_format = EV_JSON_CONTENT_FORMAT,
+        .uri_path_ptr = NULL,
+        .uri_path_len = 0U,
+        .payload_ptr = NULL,
+        .payload_len = 0U,
+        .token_ptr = NULL,
+        .token_len = 0U,
+        .options_list_ptr = NULL
+    };
+
+    (void)notify;
+
+    packet.msg_id = next_msg_id++;
+
+    packet.uri_path_ptr = (uint8_t *)EV_POST_URI_PATH;
+    packet.uri_path_len =
+        (uint16_t)strlen(EV_POST_URI_PATH);
+
+    packet.payload_ptr = ev_post_payload;
+    packet.payload_len =
+        (uint16_t)(sizeof(ev_post_payload) - 1U);
+
+    return &packet;
+}
+
+static void app_coap_post_dummy_init(void)
+{
+    int ret;
+    sl_status_t status;
+
+    sl_wisun_coap_notify_init();
+
+    memset(&ev_post_notify, 0, sizeof(ev_post_notify));
+
+    ev_post_notify.id = "ev-telemetry-post";
+
+    ret = inet_pton(
+        AF_INET6,
+        EV_POST_BR_IPV6,
+        &ev_post_notify.remote_addr.sin6_addr);
+
+    if (ret != 1) {
+        printf("ERROR: Invalid Border Router IPv6 address\r\n");
+        return;
+    }
+
+    ev_post_notify.remote_addr.sin6_port =
+        htons(EV_POST_BR_PORT);
+
+    ev_post_notify.schedule_time_ms =
+        EV_POST_INTERVAL_MS;
+
+    ev_post_notify.condition_cb =
+        ev_post_condition_cb;
+
+    ev_post_notify.hnd_cb =
+        ev_post_packet_cb;
+
+    status = sl_wisun_coap_notify_add(&ev_post_notify);
+
+    if (status == SL_STATUS_OK) {
+        printf("Dummy CoAP POST scheduled every 5 seconds\r\n");
+    } else {
+        printf("ERROR: Could not register CoAP POST notification\r\n");
+    }
+}
+
 void app_coap_init(void)
 {
     sl_wisun_coap_rhnd_resource_t coap_resource = { 0 };
@@ -266,4 +364,5 @@ void app_coap_init(void)
         printf(
             "ERROR: Failed to register ev_update command\r\n");
     }
+    app_coap_post_dummy_init();
 }
